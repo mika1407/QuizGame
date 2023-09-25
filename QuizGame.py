@@ -6,8 +6,8 @@ def new_game():
     question_num = 1
 
     for key in questions:
-        print("----------------------")
-        print(key)
+        prGreen("----------------------")
+        prYellow(key)
         for i in options[question_num-1]:
             print(i)
         guess = input("Enter (A, B, C, or D): ")
@@ -22,15 +22,15 @@ def new_game():
 def check_answer(answer, guess):
     
     if answer == guess:
-        print("CORRECT!")
+        prGreen("CORRECT!")
         return 1
     else:
-        print("WRONG!")
+        prRed("WRONG!")
         return 0
 #-------------------------------
 def display_score(correct_guesses, guesses):
     print("----------------------")
-    print("RESULTS")
+    prGreen("RESULTS")
     print("----------------------")
 
     print("Answers: ", end="")
@@ -42,10 +42,25 @@ def display_score(correct_guesses, guesses):
     for i in guesses:
         print(i, end=" ")
     print()
+
+    score = int((correct_guesses/len(questions))*100)
+    prYellow("Your score is: "+str(score)+"%")
+
 #-------------------------------
 def play_again():
-    pass
+    
+    response = input("Do you want to play again? (yes or no): ")
+    response = response.upper()
+
+    if response == "YES":
+        return True
+    else:
+        return False
 #-------------------------------
+# colors:
+def prGreen(skk): print("\033[92m{}\033[00m" .format(skk))
+def prRed(skk): print("\033[91m{}\033[00m" .format(skk))
+def prYellow(skk): print("\033[93m{}\033[00m" .format(skk))
 
 questions = {
   "Who created Python?: ": "A",
@@ -60,3 +75,8 @@ options = [["A. Guido van Rossum", "B. Elon Musk", "C. Bill Gates", "D. Mark Zuc
            ["A. True", "B. False", "C. sometimes", "D. Whats's Earth?"]]
 
 new_game()
+
+while play_again():
+    new_game()
+
+prRed("Bye!")
